@@ -2,6 +2,7 @@ package kuke.board.like.controller;
 
 import kuke.board.like.service.ArticleLikeService;
 import kuke.board.like.service.response.ArticleLikeResponse;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,20 +26,57 @@ public class ArticleLikeController {
         return articleLikeService.read(articleId, userId);
     }
 
-    @PostMapping("/articles/{articleId}/users/{userId}")
-    public void like(
+    @PostMapping("/articles/{articleId}/users/{userId}/pessimistic-lock-1")
+    public void likePessimisticLock1(
         @PathVariable("articleId") Long articleId,
         @PathVariable("userId") Long userId
     ){
-        articleLikeService.like(articleId, userId);
+        articleLikeService.likePessimisticLock1(articleId, userId);
     }
 
-    @DeleteMapping("/articles/{articleId}/users/{userId}")
-    public void unlike(
+    @DeleteMapping("/articles/{articleId}/users/{userId}/pessimistic-lock-1")
+    public void unlikePessimisticLock1(
         @PathVariable("articleId") Long articleId,
         @PathVariable("userId") Long userId
     ){
-        articleLikeService.unlike(articleId, userId);
+        articleLikeService.unlikePessimisticLock1(articleId, userId);
+    }
+
+    @PostMapping("/articles/{articleId}/users/{userId}/pessimistic-lock-2")
+    public void likePessimisticLock2(
+        @PathVariable("articleId") Long articleId,
+        @PathVariable("userId") Long userId
+    ){
+        articleLikeService.likePessimisticLock2(articleId, userId);
+    }
+
+    @DeleteMapping("/articles/{articleId}/users/{userId}/pessimistic-lock-2")
+    public void unlikePessimisticLock2(
+        @PathVariable("articleId") Long articleId,
+        @PathVariable("userId") Long userId
+    ){
+        articleLikeService.unlikePessimisticLock2(articleId, userId);
+    }
+
+    @PostMapping("/articles/{articleId}/users/{userId}/optimistic-lock")
+    public void likeOptimisticLock(
+        @PathVariable("articleId") Long articleId,
+        @PathVariable("userId") Long userId
+    ){
+        articleLikeService.likeOptimisticLock(articleId, userId);
+    }
+
+    @DeleteMapping("/articles/{articleId}/users/{userId}/optimistic-lock")
+    public void unlikeOptimisticLock(
+        @PathVariable("articleId") Long articleId,
+        @PathVariable("userId") Long userId
+    ){
+        articleLikeService.unlikeOptimisticLock(articleId, userId);
+    }
+
+    @GetMapping("/articles/{articleId}/count")
+    public Long count(@PathVariable("articleId") Long articleId){
+        return articleLikeService.count(articleId);
     }
 
 
